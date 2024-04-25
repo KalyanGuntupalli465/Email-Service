@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import Swal from 'sweetalert2';
 import { useState } from "react";
-import axios from 'axios'; // Import Axios
 
 export default function MyForm() {
   const [email, setEmail] = useState("");
@@ -21,7 +20,7 @@ export default function MyForm() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false); // New state for loading indicator
 
-  const baseUrl = "https://e-mail-service-backend.vercel.app";
+  const baseUrl = "https://e-mail-service-backend-neh1yi6nd.vercel.app";
 
   const sendEmail = async () => {
     setIsLoading(true); // Set loading to true when sending email
@@ -31,40 +30,32 @@ export default function MyForm() {
       message: message,
     };
 
-    try {
-      const response = await axios.post(`${baseUrl}/email/sendEmail`, dataSend, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
+    const res = await fetch(`${baseUrl}/email/sendEmail`, {
+      method: "POST",
+      body: JSON.stringify(dataSend),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Email sent successfully!',
-        });
-        // Clear input fields
-        setEmail("");
-        setSubject("");
-        setMessage("");
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'There was an error in sending email',
-        });
-      }
-    } catch (error) {
-      console.error('Error sending email:', error);
+    if (res.status === 200) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Email sent successfully!',
+      });
+      // Clear input fields
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } else if (res.status === 500) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'There was an error in sending email',
       });
     }
-
     setIsLoading(false); // Set loading to false after receiving response
   };
 
