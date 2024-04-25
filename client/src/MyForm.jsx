@@ -20,7 +20,7 @@ import {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false); // New state for loading indicator
   
-    const baseUrl = "http://localhost:8000";
+    const baseUrl = "https://email-service-api-omega.vercel.app";
   
     const sendEmail = async () => {
       setIsLoading(true); // Set loading to true when sending email
