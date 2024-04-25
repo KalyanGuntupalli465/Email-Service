@@ -22,7 +22,7 @@ app.use(express.json()); // tell the server to accept the json data from fronten
 app.use("/email", emailRoutes);
 
 app.get("/", (req, res) => {
-  res.join("Hello World!");
+  res.send("Hello World!");
 });
 
 const PORT = process.env.PORT;
