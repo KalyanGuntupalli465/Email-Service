@@ -12,7 +12,15 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-app.use(cors()); // Use this after the variable declaration
+app.use(cors(
+
+  {
+    origin:["https://email-service-frontend-one.vercel.app"],
+    methods:["POST","GET"],
+    credentials:true
+  }
+  
+)); // Use this after the variable declaration
 
 app.use(express.json()); // tell the server to accept the json data from frontend
 
